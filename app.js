@@ -1,4 +1,4 @@
-//jshint esversion:6
+
 
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -6,13 +6,15 @@ const mongoose = require("mongoose");
 const _ = require("lodash");
 
 
-
+const PORT=3000;
 const app = express();
 
 app.set('view engine', 'ejs');
 
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(express.static("public"));
+let path = require ('path');
+app.use(express.static(path.join(__dirname + '/public')));
+
 mongoose.set('strictQuery', false);
 mongoose.connect("mongodb+srv://luz:1234@cluster0.zwcnyqt.mongodb.net/toDoListDB", {useNewUrlParser:true});
 
@@ -134,6 +136,6 @@ app.get("/about", function(req, res){
   res.render("about");
 });
 
-app.listen(3000, function() {
+app.listen(PORT, function() {
   console.log("Server started on port 3000");
 });
