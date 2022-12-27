@@ -6,9 +6,10 @@ const mongoose = require("mongoose");
 const _ = require("lodash");
 
 
-const PORT=3000;
+const PORT=process.env.port || 3000;
 const app = express();
 
+app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
 app.use(bodyParser.urlencoded({extended: true}));
