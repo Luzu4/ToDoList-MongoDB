@@ -13,8 +13,8 @@ app.set('view engine', 'ejs');
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
-
-mongoose.connect("mongodb://localhost:27017/toDoListDB", {useNewUrlParser:true});
+mongoose.set('strictQuery', false);
+mongoose.connect("mongodb+srv://luz:1234@cluster0.zwcnyqt.mongodb.net/toDoListDB", {useNewUrlParser:true});
 
 const itemsSchema = new mongoose.Schema({
   name: String
@@ -23,15 +23,15 @@ const itemsSchema = new mongoose.Schema({
 const Item = mongoose.model("Item", itemsSchema);
 
 const item1= new Item({
-  name: "Eat Food"
+  name: "1st task"
 });
 
 const item3 = new Item({
-  name: "Eat chicken",
+  name: "Second task",
 });
 
 const item2 = new Item({
-  name: "Whats up?"
+  name: "3rd task"
 });
 
 const defaultItems = [item1, item2, item3]
@@ -77,6 +77,7 @@ app.post("/", function(req, res){
     item.save();
     res.redirect("/");
   }else{
+    console.log(listName);
     List.findOne({name: listName}, function(err,foundList){
       foundList.items.push(item);
       foundList.save();
